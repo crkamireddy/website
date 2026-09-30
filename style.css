@@ -1,0 +1,221 @@
+/* ==========================================================
+   Shared styles for every page on the site.
+   Change a value here and all four pages update.
+   ========================================================== */
+
+/* ---------- 1. Design tokens ----------
+   "Tokens" are named values reused everywhere below.
+   To change the look, start here. */
+:root {
+  --bg: #ffffff;
+  --text: #1c1c1c;        /* near-black body text */
+  --muted: #5c6166;       /* secondary text: dates, captions */
+  --accent: #16615b;      /* deep teal: links, small highlights */
+  --line: #e6e6e3;        /* hairline dividers */
+
+  /* Serif for headings, sans for body. Both use fonts already on
+     the visitor's device, so nothing is downloaded. */
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+  --width: 46rem;         /* max width of the content column */
+}
+
+/* Dark mode: same token names, different values.
+   The browser picks this automatically from the visitor's OS setting. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #141615;
+    --text: #e9e9e6;
+    --muted: #a3a8a6;
+    --accent: #7cc8bb;
+    --line: #2b2f2e;
+  }
+}
+
+/* ---------- 2. Base ---------- */
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+/* Centers the content in a readable column with a side gutter. */
+.container {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.2;
+}
+h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+h2 { font-size: 1.5rem; margin: 3rem 0 1rem; }
+h3 { font-size: 1.1875rem; margin: 0 0 0.25rem; }
+
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* Visible outline for keyboard users (Tab key). */
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.muted { color: var(--muted); }
+
+/* ---------- 3. Header and nav (same on every page) ---------- */
+.site-header { padding: 1.5rem 0; }
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;          /* lets nav drop below the name on phones */
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1.5rem;
+}
+.site-name {
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-size: 0.9375rem;
+}
+.site-nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.site-nav a:hover { color: var(--text); }
+/* aria-current="page" marks the page you're on; style it as active. */
+.site-nav a[aria-current="page"] {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- 4. Main content ---------- */
+main { padding: 3rem 0 4rem; }
+
+.lede {
+  font-size: 1.1875rem;
+  color: var(--muted);
+}
+
+/* Home page intro: text on the left, photo on the right.
+   On phones the photo stacks on top (see media query below). */
+.intro {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  align-items: center;
+}
+.intro h1 { font-size: 3rem; }
+
+.photo {
+  width: 168px;
+  height: 168px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--line);  /* gray circle until the photo exists */
+}
+
+/* Home page: list of links to the other pages. */
+.home-links {
+  list-style: none;
+  padding: 0;
+  margin: 3.5rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.home-links a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+}
+.home-links strong {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  min-width: 7rem;
+}
+.home-links span { color: var(--muted); flex: 1; }
+.home-links a::after { content: "→"; color: var(--accent); }
+.home-links a:hover strong { color: var(--accent); }
+
+/* Projects: one entry per project, separated by hairlines. */
+.projects {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  border-top: 1px solid var(--line);
+}
+.project {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.project .meta {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+.project p { margin: 0.25rem 0 0.5rem; }
+
+/* Experience: dates in a narrow left column, details on the right. */
+.timeline { margin-top: 2.5rem; }
+.entry {
+  display: grid;
+  grid-template-columns: 10.5rem 1fr;
+  gap: 0.25rem 1.5rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line);
+}
+.entry .dates {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  padding-top: 0.2rem;
+  white-space: nowrap;   /* keep "Aug 2024 – Aug 2026" on one line */
+}
+.entry .title { color: var(--muted); margin: 0; }
+.entry p { margin: 0.5rem 0 0; }
+.highlights { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.highlights li { margin-bottom: 0.35rem; }
+.highlights li::marker { color: var(--accent); }
+
+/* ---------- 5. Footer ---------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0 2.5rem;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* ---------- 6. Phones ----------
+   Below 600px wide, collapse two-column layouts into one. */
+@media (max-width: 600px) {
+  h1, .intro h1 { font-size: 2.25rem; }
+  .intro { grid-template-columns: 1fr; gap: 1.5rem; }
+  .intro .photo { order: -1; width: 120px; height: 120px; }
+  .entry { grid-template-columns: 1fr; }
+  .entry .dates { padding-top: 0; }
+  .home-links a { flex-wrap: wrap; }
+  .home-links span { flex-basis: 100%; order: 3; }
+}
