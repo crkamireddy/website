@@ -1,0 +1,104 @@
+/* Styles for the Voice Guide page only. Colors and fonts come from
+   the tokens in ../style.css, so dark mode works automatically. */
+
+.small { font-size: 0.875rem; }
+.intro-notes p { margin: 0 0 0.75rem; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Conversation ---------- */
+.chat {
+  margin: 2rem 0 1rem;
+  border-top: 1px solid var(--line);
+}
+.message {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.message .who {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-bottom: 0.25rem;
+}
+.message.user .body { white-space: pre-wrap; }
+.message .body > :first-child { margin-top: 0; }
+.message .body > :last-child { margin-bottom: 0; }
+.message .body p { margin: 0 0 0.75rem; }
+.message .body ul, .message .body ol { margin: 0 0 0.75rem; padding-left: 1.25rem; }
+.message .body blockquote {
+  margin: 0 0 0.75rem;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--line);
+  color: var(--muted);
+}
+.message .body h1, .message .body h2, .message .body h3, .message .body h4 {
+  font-size: 1.0625rem;
+  margin: 1rem 0 0.5rem;
+}
+/* Wide tables scroll inside the message instead of widening the page. */
+.message .body .table-wrap { overflow-x: auto; margin: 0 0 0.75rem; }
+.message .body table { border-collapse: collapse; font-size: 0.9375rem; }
+.message .body th, .message .body td {
+  border: 1px solid var(--line);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+.message .body code { font-size: 0.9em; }
+
+.status { color: var(--muted); font-style: italic; }
+.error-note { color: #b3261e; }
+@media (prefers-color-scheme: dark) { .error-note { color: #f2b8b5; } }
+
+/* ---------- The finished guide ---------- */
+.guide-card {
+  margin: 0.5rem 0 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+}
+.guide-card strong { font-family: var(--serif); font-size: 1.125rem; }
+.guide-card .composer-buttons { margin: 0.75rem 0 0.5rem; }
+.guide-card details { margin-top: 0.5rem; }
+.guide-card summary { cursor: pointer; color: var(--accent); }
+
+/* ---------- Message box ---------- */
+.composer textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.75rem;
+  resize: vertical;
+}
+.composer textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.composer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-top: 0.5rem;
+}
+.composer-buttons { display: flex; gap: 0.5rem; }
+
+.button, .button-quiet {
+  font: inherit;
+  font-size: 0.9375rem;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+}
+.button { background: var(--accent); color: var(--bg); border: 1px solid var(--accent); }
+.button-quiet { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+.button:disabled { opacity: 0.5; cursor: default; }
+.button:focus-visible, .button-quiet:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

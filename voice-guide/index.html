@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice Guide · Cat R. Kamireddy</title>
+  <meta name="description" content="Answer questions in your own words and get a voice guide your team can read and your AI tools can follow.">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="voice-guide.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="site-name" href="../index.html">Cat R. Kamireddy</a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="../projects.html">Projects</a>
+        <a href="../experience.html">Experience</a>
+        <a href="../about.html">About</a>
+        <a href="https://www.linkedin.com/in/catkamireddy/">LinkedIn ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Voice Guide</h1>
+    <p class="lede">Sound like yourself everywhere you write.</p>
+
+    <div class="intro-notes">
+      <p>We'll ask what you're building and how you talk, look at anything you've already written, and show you sample copy before writing anything. It takes about 20 to 30 minutes. At the end, you'll download your voice guide: one Markdown file your team can read and your AI tools can follow.</p>
+      <p class="muted small">Your messages go to Anthropic's Claude to write the replies. We don't store them; the conversation stays in this browser. <a href="../projects.html">How this was built</a></p>
+    </div>
+
+    <!-- The conversation appears here. -->
+    <div id="chat" class="chat" aria-live="polite"></div>
+
+    <form id="composer" class="composer">
+      <label for="input" class="visually-hidden">Your message</label>
+      <textarea id="input" rows="3" placeholder="Start with your company or project name and what it does, in a sentence." required></textarea>
+      <div class="composer-row">
+        <span class="muted small">Enter to send · Shift+Enter for a new line</span>
+        <div class="composer-buttons">
+          <button type="button" id="restart" class="button-quiet">Start over</button>
+          <button type="submit" id="send" class="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      © 2026 Cat R. Kamireddy · <a href="https://www.linkedin.com/in/catkamireddy/">LinkedIn ↗</a>
+    </div>
+  </footer>
+
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
+  <script src="voice-guide.js"></script>
+</body>
+</html>
