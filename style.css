@@ -13,11 +13,10 @@
   --accent: #16615b;      /* deep teal: links, small highlights */
   --line: #e6e6e3;        /* hairline dividers */
 
-  /* Serif for headings, sans for body. Both use fonts already on
-     the visitor's device, so nothing is downloaded. */
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          "Helvetica Neue", Arial, sans-serif;
+  /* Newsreader for headings and body, loaded from Google Fonts by the
+     <link> tags in each page's <head>. Georgia is the fallback if it
+     doesn't load. */
+  --serif: "Newsreader", Georgia, serif;
   --width: 46rem;         /* max width of the content column */
 }
 
@@ -40,7 +39,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 1.0625rem;
   line-height: 1.65;
 }
