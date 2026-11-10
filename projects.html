@@ -34,34 +34,42 @@
     <ul class="projects">
       <li class="project">
         <div class="meta">November 2026</div>
+        <h3>Voice Guide Builder</h3>
+        <p>A conversation that interviews a founder and writes a voice and tone guide that people and AI tools can both follow. Hosted as a site instead of a skill so it's easy to use without any setup. Built on 13 years of shaping how products sound at Stripe, Clever, Instawork, and Groupon.</p>
+        <p><a href="voice-guide/">Try it ↗</a></p>
+      </li>
+
+      <li class="project">
+        <div class="meta">November 2026</div>
         <h3>Prompt Report Card</h3>
-        <p>Grades agent prompts, aka the instructions that run on their own with nobody watching. To keep the grading consistent, I re-test it against 21 prompts with agreed grades whenever I change the rules.</p>
+        <p>Grades agent prompts, aka the instructions that run on their own with nobody watching. To keep the grading consistent, I re-test the tool against 21 prompts with locked-in grades whenever I change the rules.</p>
         <!-- Downloads live in downloads/. If the skill changes, run
              node build/build-skill.js in ../grading-prompts/ and copy
              dist/prompt-report-card.skill over this one. -->
-        <p><a href="https://claude.ai/artifact/YWEWXd9VY5FnXwExHHhnP5">Try it ↗</a> · <a href="https://claude.ai/artifact/1bdMptwZpdTxPqhgx2sxoN">Rubric ↗</a> <span class="muted">(grading runs on your own Claude account)</span></p>
+        <p><a href="https://claude.ai/artifact/YWEWXd9VY5FnXwExHHhnP5">Try it ↗</a> <span class="muted">(grading runs on your own Claude account)</span></p>
+        <p><a href="https://claude.ai/artifact/1bdMptwZpdTxPqhgx2sxoN">Rubric ↗</a></p>
+        <p><a href="https://github.com/crkamireddy/prompt-report-card-rubric">Public repo ↗</a> <span class="muted">(rubric, commands, and some of the calibration prompts)</span></p>
         <p><a href="downloads/prompt-report-card.skill" download>Download the skill</a> <span class="muted">(.skill file, 18 KB; add it to Claude under Settings → Skills)</span></p>
-        <p><a href="https://github.com/crkamireddy/prompt-report-card-rubric">Public repo ↗</a> <span class="muted">(the rubric, commands, and some of the calibration prompts)</span></p>
       </li>
 
       <li class="project">
         <div class="meta">October 2026</div>
         <h3>Three apps from one build</h3>
-        <p>An app for saving my kids' art, a kids' wish list, and my own private wish list, all passcode-locked. The first took 48 minutes, including a Google Photos sync, and the other two were copies Claude Code adapted in about 20 minutes each.</p>
+        <p>An app for saving my kids' art, a kids' wish list, and my own private wish list, all passcode-locked. The first took 48 minutes, including a Google Photos sync, and the other two were copies Claude Code adapted in about 20 minutes each. Vibe coding at its best— I set a "rigor budget" up front so there was only as much testing as a family app needs.</p>
         <a href="https://catreading.substack.com/p/three-apps-from-one-build">Read more ↗</a>
       </li>
 
       <li class="project">
         <div class="meta">October 2026</div>
         <h3>Night shift worker</h3>
-        <p>An overnight Claude agent that builds pre-approved tasks for a web app I'm working on. Each session runs on its own branch with a spending cap and guard, and a separate agent writes a morning summary to review and merge.</p>
+        <p>An overnight Claude agent that builds pre-approved tasks for a web app I'm working on. Guardrails were the key here. Each session runs on its own branch with a spending cap and guard, and a separate agent writes a morning summary to review and merge.</p>
         <a href="https://catreading.substack.com/p/how-i-gave-claude-the-night-shift">Read more ↗</a>
       </li>
 
       <li class="project">
         <div class="meta">October 2026</div>
         <h3>School email digest</h3>
-        <p>Reads school emails and posts a short Slack message with only what I need to act on. Claude pulls out the items, a 21-day memory marks repeats as follow-ups, and plain Python rules decide what gets posted.</p>
+        <p>Reads school emails and posts a short Slack message with only what I need to act on. Claude pulls out the items, and a 21-day memory marks repeats as follow-ups. I ended up taking AI out of the decision-making because a model judging every email was inconsistent. Plain rules decide what gets posted.</p>
         <a href="https://catreading.substack.com/p/automating-the-school-email-firehose">Read more ↗</a>
         <p><a href="https://github.com/crkamireddy/school-email-digest">Code on GitHub ↗</a> <span class="muted">(public template; set up your own copy)</span></p>
       </li>
@@ -69,7 +77,7 @@
       <li class="project">
         <div class="meta">October 2026</div>
         <h3>Book fair advisor</h3>
-        <p>Turns 100+ titles proposed by parent volunteers into an order for my kids' school book fair. Claude researches each title and scores its cover, and a Python engine sizes each order from past sales and adjusts for books that sold out.</p>
+        <p>Turns 100+ titles proposed by parent volunteers into an order for my kids' school book fair. Claude researches each title and scores its cover, and a Python engine sizes each order from past sales and adjusts for books that sold out. It purposely advises; it doesn't decide, and the rules came from me and our insights into kids' books.</p>
         <a href="https://catreading.substack.com/p/i-built-an-ai-advisor-for-my-kids">Read more ↗</a>
       </li>
 
@@ -86,7 +94,7 @@
       <li class="project">
         <div class="meta">September 2026</div>
         <h3>Daily and weekly journals</h3>
-        <p>Two commands that write daily and weekly journals of my AI work by reading my Claude Code sessions, git commits, and project chats, so nothing depends on me remembering to log it.</p>
+        <p>Two commands that write daily and weekly journals of my AI work by reading my Claude Code sessions, git commits, and project chats. My first tracker ran on a schedule and kept missing days, so I rebuilt it to read the record after the fact.</p>
         <a href="https://catreading.substack.com/p/a-journal-that-writes-itself">Read more ↗</a>
       </li>
     </ul>
