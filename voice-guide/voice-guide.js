@@ -10,7 +10,17 @@ const WORKER_URL = LOCAL
   ? "http://localhost:8787/chat"
   : "https://voice-guide.catreading.workers.dev/chat";
 
-const STORAGE_KEY = "voice-guide-conversation-v1";
+// Cloudflare Turnstile, the check that a visitor is a person. The site key is
+// public by design (it's in every page that shows the check). Locally we use
+// Cloudflare's test key, which always passes.
+const TURNSTILE_SITE_KEY = LOCAL
+  ? "1x00000000000000000000AA"
+  : "0x4AAAAAAF8FYZvbSMOGsqYN";
+
+// v2: conversations now carry the Worker's signature. Older saved
+// conversations (v1) have none and can't continue, so they're cleared.
+const STORAGE_KEY = "voice-guide-conversation-v2";
+const OLD_STORAGE_KEY = "voice-guide-conversation-v1";
 const MAX_MESSAGES = 120; // matches the Worker's limit
 
 const chatEl = document.getElementById("chat");
@@ -18,27 +28,32 @@ const form = document.getElementById("composer");
 const input = document.getElementById("input");
 const sendButton = document.getElementById("send");
 const restartButton = document.getElementById("restart");
+const turnstileEl = document.getElementById("turnstile-check");
 
 // Messages in the shape the Claude API expects:
 //   { role: "user", content: "text" }
 //   { role: "assistant", content: [ ...blocks exactly as Claude sent them ] }
-let messages = loadConversation();
+// history: the Worker's signature over the conversation so far
+//   { id, started, signature }, sent back with the next message.
+let { messages, history } = loadConversation();
 let busy = false;
 
 // ---------- Saving in this browser, so a refresh doesn't lose the conversation ----------
 
 function loadConversation() {
   try {
+    localStorage.removeItem(OLD_STORAGE_KEY);
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved) ? saved : [];
+    if (saved && Array.isArray(saved.messages)) return { messages: saved.messages, history: saved.history ?? null };
   } catch {
-    return [];
+    // Storage blocked or unreadable: start fresh.
   }
+  return { messages: [], history: null };
 }
 
 function saveConversation() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ messages, history }));
   } catch {
     // Private browsing or storage full: the chat still works, it just won't survive a refresh.
   }
@@ -158,6 +173,34 @@ function renderAll() {
   }
 }
 
+// ---------- Turnstile: only before the first message ----------
+// The script from Cloudflare calls onTurnstileLoad when it's ready. Each token
+// works once, so the check resets after every attempt to start a conversation.
+
+let turnstileWidget = null;
+let turnstileToken = null;
+
+window.onTurnstileLoad = () => showTurnstileIfNeeded();
+
+function showTurnstileIfNeeded() {
+  const needed = messages.length === 0;
+  turnstileEl.hidden = !needed;
+  if (!needed || !window.turnstile) return;
+  if (turnstileWidget === null) {
+    turnstileWidget = turnstile.render(turnstileEl, {
+      sitekey: TURNSTILE_SITE_KEY,
+      callback: (token) => { turnstileToken = token; },
+      "expired-callback": () => { turnstileToken = null; },
+      "error-callback": () => { turnstileToken = null; },
+    });
+  }
+}
+
+function resetTurnstile() {
+  turnstileToken = null;
+  if (turnstileWidget !== null && window.turnstile) turnstile.reset(turnstileWidget);
+}
+
 // ---------- Sending a message ----------
 
 function setBusy(value) {
@@ -170,6 +213,9 @@ function setBusy(value) {
 }
 
 async function send(text) {
+  const isFirst = messages.length === 0;
+  const token = turnstileToken;
+  if (isFirst) resetTurnstile(); // used up by this attempt, whatever happens
   messages.push({ role: "user", content: text });
   saveConversation();
   const userEl = showUser(text);
@@ -196,7 +242,7 @@ async function send(text) {
     const response = await fetch(WORKER_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify(isFirst ? { messages, turnstileToken: token } : { messages, history }),
     });
     if (!response.ok) {
       const problem = await response.json().catch(() => ({}));
@@ -232,7 +278,9 @@ async function send(text) {
         } else if (event.type === "done") {
           finished = true;
           messages.push({ role: "assistant", content: event.content });
+          history = event.history;
           saveConversation();
+          showTurnstileIfNeeded();
           fillAssistant(body, textOf(event.content), true);
           if (event.stop_reason === "max_tokens") {
             note(body, "That reply got cut off. Say \"please continue\" to get the rest.");
@@ -275,11 +323,14 @@ restartButton.addEventListener("click", () => {
   if (busy) return;
   if (messages.length && !confirm("Start over? This clears the conversation in this browser.")) return;
   messages = [];
+  history = null;
   saveConversation();
   renderAll();
+  showTurnstileIfNeeded();
   setBusy(false);
   input.focus();
 });
 
 renderAll();
 setBusy(false);
+showTurnstileIfNeeded();

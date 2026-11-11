@@ -40,6 +40,8 @@
 
     <form id="composer" class="composer">
       <label for="input" class="visually-hidden">Your message</label>
+      <!-- Cloudflare's check that you're a person, shown before the first message. -->
+      <div id="turnstile-check" class="turnstile" hidden></div>
       <textarea id="input" rows="3" placeholder="Start with your company or project name and what it does, in a sentence." required></textarea>
       <div class="composer-row">
         <span class="muted small">Enter to send · Shift+Enter for a new line</span>
@@ -60,5 +62,6 @@
   <script src="vendor/marked.min.js"></script>
   <script src="vendor/purify.min.js"></script>
   <script src="voice-guide.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad" async defer></script>
 </body>
 </html>

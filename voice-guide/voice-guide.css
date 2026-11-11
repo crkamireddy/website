@@ -90,6 +90,8 @@
   margin-top: 0.5rem;
 }
 .composer-buttons { display: flex; gap: 0.5rem; }
+.turnstile { margin-bottom: 0.5rem; min-height: 65px; }
+.turnstile[hidden] { display: none; }
 
 .button, .button-quiet {
   font: inherit;
