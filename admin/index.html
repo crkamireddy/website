@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · Cat R. Kamireddy</title>
+  <!-- Just for Cat. Keep it out of search results. The page itself holds no
+       data: it asks the Voice Guide Worker, which only answers with the key. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&display=swap">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="site-name" href="../index.html">Cat R. Kamireddy</a>
+      <nav class="site-nav" aria-label="Admin">
+        <button type="button" class="link-button" id="refresh" hidden>Refresh</button>
+        <button type="button" class="link-button" id="forget" hidden>Forget key</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container admin">
+    <h1>Admin</h1>
+    <p class="muted" id="status">Loading…</p>
+
+    <form id="key-form" class="key-form" hidden>
+      <label for="key">Admin key</label>
+      <p class="muted">The long key you set on the Voice Guide Worker. This browser remembers it.</p>
+      <div class="key-row">
+        <input id="key" type="password" autocomplete="off" spellcheck="false" required>
+        <button type="submit">Show stats</button>
+      </div>
+      <p class="error" id="key-error" hidden></p>
+    </form>
+
+    <div id="report" hidden>
+      <section>
+        <h2>Worth knowing</h2>
+        <ul class="notes" id="notes"></ul>
+      </section>
+
+      <section>
+        <h2>Visitors</h2>
+        <p class="muted" id="visitors-range"></p>
+        <div id="visitors"></div>
+      </section>
+
+      <section>
+        <h2>Voice Guide</h2>
+        <div id="voice-guide"></div>
+      </section>
+    </div>
+  </main>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+  <script src="admin.js"></script>
+</body>
+</html>
